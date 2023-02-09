@@ -18,6 +18,8 @@ function contarTIempo(){
         if (tiempo==0) {
             clearInterval(mitempo)
             voltearTodas()
+        }else if(aciertos===8){
+            clearInterval(mitempo)
         }else{
             tiempo--
             document.getElementById('tiempo').innerHTML=`Tiempo ${tiempo} segundos`
@@ -72,4 +74,5 @@ function destapar(indice){
 function reset(){
     location.reload()
 }
+
 
