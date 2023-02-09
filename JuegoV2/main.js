@@ -16,22 +16,12 @@ let numeroTarjetas = 0;
 let tarjetasDestapadas = 0;
 let tarjeta1 = null;
 let tarjeta2 = null;
-let aciertos=0
-let movimientos=0
-let temporizador=false
-
-function contarTIempo() {
-  mitempo = setInterval(() => {
-    if (tiempo == 0) {
-      clearInterval(mitempo);
-      voltearTodas();
-    } else {
-      tiempo--;
-      document.getElementById("tiempo").innerHTML = `Tiempo ${tiempo} segundos`;
-    }
-  }, 1000);
-}
-
+let aciertos = 0;
+let movimientos = 0;
+let temporizador = false;
+let resultado1 = "";
+let resultado2 = "";
+let sorteoNumeros = null;
 
 function voltearTodas() {
   document.getElementById("tiempo").innerHTML = `Tiempo acabado 😱`;
@@ -44,6 +34,7 @@ function voltearTodas() {
 boton16.addEventListener("click", () => {
   tiempo = 60;
   numeroTarjetas = 16;
+  sorteoNumeros = numeros16;
   tablero.innerHTML = `
     <table>
     <tr>
@@ -73,20 +64,32 @@ boton16.addEventListener("click", () => {
   </table>`;
   boton32.disabled = true;
 
-  contarTIempo()
-
   numeros16 = numeros16.sort(() => Math.random() - 0.5); /*desordenar numeros*/
   console.log(numeros16);
 
-  if (aciertos === 8) {
-    clearInterval(mitempo);
+  function contarTIempo() {
+    mitempo = setInterval(() => {
+      if (tiempo == 0) {
+        clearInterval(mitempo);
+        voltearTodas();
+      } else if (aciertos === 8) {
+        clearInterval(mitempo);
+        alert('GANASTE')
+      } else {
+        tiempo--;
+        document.getElementById(
+          "tiempo"
+        ).innerHTML = `Tiempo ${tiempo} segundos`;
+      }
+    }, 1000);
   }
-
+  contarTIempo();
 });
 
 boton32.addEventListener("click", () => {
   tiempo = 180;
   numeroTarjetas = 32;
+  sorteoNumeros = numeros32;
   tablero.innerHTML = `<table>
     <tr>
       <td><button id="0" onclick="destapar(0)"></button></td>
@@ -140,29 +143,47 @@ boton32.addEventListener("click", () => {
     clearInterval(mitempo);
   }
 
-  contarTIempo()
+  function contarTIempo() {
+    mitempo = setInterval(() => {
+      if (tiempo == 0) {
+        clearInterval(mitempo);
+        voltearTodas();
+      } else if (aciertos === 16) {
+        clearInterval(mitempo);
+        alert('GANASTE')
+      } else {
+        tiempo--;
+        document.getElementById(
+          "tiempo"
+        ).innerHTML = `Tiempo ${tiempo} segundos`;
+      }
+    }, 1000);
+  }
 
+  contarTIempo();
 });
 
 function reset() {
   location.reload();
 }
 
+console.log(sorteoNumeros);
+
 function destapar(indice) {
   tarjetasDestapadas++;
   if (temporizador == false) {
-    temporizador = true;    
+    temporizador = true;
   }
   if (tarjetasDestapadas == 1) {
     tarjeta1 = document.getElementById(indice);
-    tarjeta1.innerHTML = numeros32[indice];
+    tarjeta1.innerHTML = sorteoNumeros[indice];
     tarjeta1.disabled = true;
-    resultado1 = numeros32[indice];
+    resultado1 = sorteoNumeros[indice];
   } else if (tarjetasDestapadas == 2) {
     tarjeta2 = document.getElementById(indice);
-    tarjeta2.innerHTML = numeros32[indice];
+    tarjeta2.innerHTML = sorteoNumeros[indice];
     tarjeta2.disabled = true;
-    resultado2 = numeros32[indice];
+    resultado2 = sorteoNumeros[indice];
 
     if (resultado1 == resultado2) {
       tarjetasDestapadas = 0;
