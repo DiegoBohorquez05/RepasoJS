@@ -9,39 +9,35 @@ const nota1=parseFloat(document.getElementById('Nota1').value)
 const nota2=parseFloat(document.getElementById('Nota2').value)
 const nota3=parseFloat(document.getElementById('Nota3').value)
 
+let CalificacionFinale=null
+
 datos=[]
 
 agregar.addEventListener('click',()=>{
         if(nota1>5 || nota2>5 || nota3>5){
             alert('Las notas no pueden ser mayores a 5')
-            nota1.innerText=''
-            nota2.innerText=''
-            nota3.innerText=''
         }else{
-            //console.log(datos)
-            promedio=(nota1+nota2+nota3)/3
+            console.log(datos)
             //console.log(promedio)
-            datos.push({nombre: nombre.value, curso: curso.value, genero: genero.value})
-            localStorage.setItem('lista',JSON.stringify(datos))
+            datos.push({nombre: nombre.value, curso: curso.value, genero: genero.value, Nota1: nota1, Nota2: nota2, Nota3: nota3})
+            localStorage.setItem('estudiantes',JSON.stringify(datos))
         }
 })
 
 mostrar.addEventListener('click',()=>{
-    JSON.parse(localStorage.getItem('lista'))
-    if(lista===undefined){
-        alert('lista vacia')
+    lista=JSON.parse(localStorage.getItem('estudiantes'))
+    console.log(lista)
+    if(lista==undefined){
+        alert('Lista Vacia')
     }else{
-        for(i=0;i<lista.length; i++){
-            console.log(lista[i])
-            tabla.innerHTML=
-            `
-            <tabla>
-            <tr>
-            <td>Nombre: ${nombre[0]}</td>
-            <td>Genero: ${genero[1]}</td>
-            </tr>
-            </tabla>
-            `
+        promedio=(nota1+nota2+nota3)/3
+        if(promedio>=3.5){
+            CalificacionFinale='Aprovado'
+        }else{
+            CalificacionFinale='Reprovado'
         }
+        lista.forEach(element => {
+        tabla.innerHTML= element.nombre + " , " + "Promedio: " + promedio + " , " + CalificacionFinale
+       });
     }
 })
