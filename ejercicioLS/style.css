@@ -1,0 +1,23 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.datos{
+    border: solid 1px;
+    width: 700px;
+    margin: 0 auto;
+    padding: 10px;
+    text-align: center;
+}
+
+button{
+    width: 100px;
+}
+
+#tabla{
+    border: solid 1px;
+    width: 700px;
+    margin: 5% auto;
+}
