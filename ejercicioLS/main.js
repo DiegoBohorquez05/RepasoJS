@@ -6,6 +6,7 @@ const mostrar = document.getElementById("mostrar");
 const tabla = document.getElementById("tabla");
 
 let CalificacionFinale = null;
+let promedio = 0;
 
 datos = [];
 
@@ -29,30 +30,24 @@ agregar.addEventListener("click", () => {
     });
     localStorage.setItem("estudiantes", JSON.stringify(datos));
   }
-
-  mostrar.addEventListener("click", () => {
-    lista = JSON.parse(localStorage.getItem("estudiantes"));
-    console.log(lista);
-    if (lista == undefined) {
-      alert("Lista Vacia");
-    } else {
-      promedio = (nota1 + nota2 + nota3) / 3;
-      if (promedio >= 3.5) {
-        CalificacionFinale = "Aprovado";
-      } else {
-        CalificacionFinale = "Reprovado";
-      }
-      lista.forEach((element) => {
-        tabla.innerHTML =
-          element.nombre +
-          " , " +
-          "Promedio: " +
-          promedio +
-          " , " +
-          CalificacionFinale;
-      });
-    }
-  });
 });
 
-
+mostrar.addEventListener("click", () => {
+    tabla.innerHTML = ``
+  lista = JSON.parse(localStorage.getItem("estudiantes"));
+  console.log(lista);
+  if (lista == undefined) {
+    alert("Lista Vacia");
+  } else {
+    if (promedio >= 3.5) {
+      CalificacionFinale = "Aprovado";
+    } else {
+      CalificacionFinale = "Reprovado";
+    }
+    lista.forEach((element) => {
+      promedio = 0;
+      promedio = (element.nota1 + element.nota2 + element.nota3) / 3;
+      tabla.innerHTML += `${element.nombre} , promedio: ${promedio}, ${CalificacionFinale}<br>`;
+    });
+  }
+});
