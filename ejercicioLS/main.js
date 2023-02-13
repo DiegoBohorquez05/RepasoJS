@@ -18,6 +18,8 @@ agregar.addEventListener("click", () => {
     alert("Las notas no pueden ser mayores a 5");
   } else {
     console.log(nota1);
+    console.log(nota2);
+    console.log(nota3);
     console.log(datos);
     //console.log(promedio)
     datos.push({
@@ -36,6 +38,7 @@ mostrar.addEventListener("click", () => {
     tabla.innerHTML = ``
   lista = JSON.parse(localStorage.getItem("estudiantes"));
   console.log(lista);
+    console.log(lista[0].Nota1);
   if (lista == undefined) {
     alert("Lista Vacia");
   } else {
@@ -46,7 +49,7 @@ mostrar.addEventListener("click", () => {
     }
     lista.forEach((element) => {
       promedio = 0;
-      promedio = (element.nota1 + element.nota2 + element.nota3) / 3;
+      promedio = (element.Nota1 + element.Nota2 + element.Nota3) / 3
       tabla.innerHTML += `${element.nombre} , promedio: ${promedio}, ${CalificacionFinale}<br>`;
     });
   }
